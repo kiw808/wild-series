@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <h1>{{ welcome }}</h1>
+<a href="{{ path('wild_show', {'slug' : 'cowboy-bebop'}) }}" class="text-secondary">Afficher Cowboy Bebop</a>
 {% endblock %}
