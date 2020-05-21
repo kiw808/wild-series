@@ -1,4 +1,20 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}
+    All programs
+{% endblock %}
+
 {% block body %}
-<h1>{{ website }} index</h1>
+    <h1>All shows in the table programs</h1>
+    {% for program in programs %}
+        <div>
+            <h2>{{ loop.index }} / {{ program.title }} - Category : {{ program.category.name }}</h2>
+            <p>{{ program.summary }}</p>
+        </div>
+    {% else %}
+        Shows not found
+    {% endfor %}
+    <a href="{{ path('app_index') }}">
+        Back to home
+    </a>
 {% endblock %}

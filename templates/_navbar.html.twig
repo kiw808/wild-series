@@ -6,17 +6,16 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/wild">Go wild</a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Catégories
+                    Catrgories
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Drame</a>
-                    <a class="dropdown-item" href="#">Comédie</a>
-                    <a class="dropdown-item" href="#">SF</a>
-                    <a class="dropdown-item" href="#">Western</a>
-                    <a class="dropdown-item" href="#">Fantastique</a>
-                    <a class="dropdown-item" href="#">Thriller</a>
+                    <a class="dropdown-item" href="{{ path('wild_category', {'categoryName': 'Horror'}) }}">Horror</a>
+                    <a class="dropdown-item" href="{{ path('wild_category', {'categoryName': 'Adventure'}) }}">Adventure</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -24,10 +23,6 @@
                     Acteurs
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Acteurs</a>
-                    <a class="dropdown-item" href="#">Acteurs</a>
-                    <a class="dropdown-item" href="#">Acteurs</a>
-                    <a class="dropdown-item" href="#">Acteurs</a>
                 </div>
             </li>
             <li class="nav-item">

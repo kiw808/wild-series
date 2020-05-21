@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ category.name }} shows
+{% endblock %}
+
+{% block body %}
+    <h1> All {{ category.name }} shows</h1>
+    {% for program in programs %}
+        <div>
+            <h2>{{ loop.index }} / {{ program.title }}</h2>
+            <p>{{ program.summary }}</p>
+        </div>
+    {% else %}
+        There is no shows in {{ category.name }} category
+    {% endfor %}
+    <a href="{{ path('wild_index') }}">
+        All shows
+    </a>
+{% endblock %}
