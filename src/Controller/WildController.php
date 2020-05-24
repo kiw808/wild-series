@@ -85,6 +85,12 @@ class WildController extends AbstractController
      */
     public function showByCategory(?string $categoryName) :Response
     {
+        if (!$categoryName) {
+            throw $this->createNotFoundException(
+                'No category name has been sent to find a category in category\'s table'
+            );
+        }
+
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findOneBy(['name' => $categoryName]);
@@ -96,6 +102,12 @@ class WildController extends AbstractController
                 ['id' => 'desc'],
                 3
             );
+
+        if (!$programs) {
+            throw $this->createNotFoundException(
+                'No programs with ' . $categoryName . ' category name found in program\'s table'
+            );
+        }
 
         return $this->render('wild/category.html.twig', [
             'category' => $category,
