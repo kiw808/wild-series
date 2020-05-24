@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ program.title }}{% endblock %}
+
+{% block body %}
+    <div class="media">
+        <img class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
+        <div class="media-body">
+            <h1 class="mt-0">{{ program.title }}</h1>
+            <p>{{ program.summary }}</p>
+            <p>Category : <strong>{{ program.category.name }}</strong></p>
+            {% for season in seasons %}
+                <a href="#"><h2>Season {{ season.number }}</h2></a>
+                <p>Year : {{ season.year }}</p>
+                <p>Description : {{ season.description }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="{{ path('wild_index') }}">
+        All shows
+    </a>
+{% endblock %}
