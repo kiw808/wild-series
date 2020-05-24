@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,16 @@ class Category
      * @ORM\Column(type="string", length=100)
      */
     private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Program", mappedBy="category")
+     */
+    private $programs;
+
+    public function __construct()
+    {
+        $this->programs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
