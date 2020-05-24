@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Category;
+use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -132,7 +133,7 @@ class WildController extends AbstractController
             );
         }
 
-        $slug = preg_replace(
+        $title = $slug = preg_replace(
             '/-/',
             ' ',
             ucwords(trim(strip_tags($slug)), "-")
@@ -140,7 +141,7 @@ class WildController extends AbstractController
 
         $program = $this->getDoctrine()
             ->getRepository(Program::class)
-            ->findOneBy(['title' => mb_strtolower($slug)]);
+            ->findOneBy(['title' => mb_strtolower($title)]);
 
         if (!$program) {
             throw $this->createNotFoundException(
@@ -161,6 +162,49 @@ class WildController extends AbstractController
         return $this->render('wild/program.html.twig', [
             'program' => $program,
             'seasons' => $seasons,
+        ]);
+    }
+
+    /**
+     * @Route("/season/{id}",
+     *     defaults={"id"= null},
+     *     name="season"
+     * )
+     * @param int $id
+     * @return Response
+     */
+    public function showBySeason(int $id) :Response
+    {
+        $season = $this->getDoctrine()
+            ->getRepository(Season::class)
+            ->findOneBy(['id' => $id]);
+
+        $episodes = $this->getDoctrine()
+            ->getRepository(Episode::class)
+            ->findBy(['season' => $id]);
+
+        return $this->render('wild/season.html.twig', [
+            'season' => $season,
+            'episodes' => $episodes,
+        ]);
+    }
+
+    /**
+     * @Route("/episode/{id}",
+     *     defaults={"id"= null},
+     *     name="episode"
+     * )
+     * @param int $id
+     * @return Response
+     */
+    public function showByEpisode(int $id) :Response
+    {
+        $episode = $this->getDoctrine()
+            ->getRepository(Episode::class)
+            ->findOneBy(['id' => $id]);
+
+        return $this->render('wild/episode.html.twig', [
+            'episode' => $episode,
         ]);
     }
 }

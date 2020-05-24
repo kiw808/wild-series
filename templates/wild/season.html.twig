@@ -1,9 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ program.title }} - Season {{ season.number }}
+    {{ season.program.title }} - Season {{ season.number }}
 {% endblock %}
 
 {% block body %}
-
+    <h2>Season {{ season.number }} of {{ season.program.title }}</h2>
+    <div>
+        <ul class="list-group list-group-flush">
+            {% for episode in episodes %}
+                <a href="/wild/episode/{{ episode.id }}"><li class="list-group-item">Episode {{ episode.number }} : {{ episode.title }}</li></a>
+            {% endfor %}
+        </ul>
+    </div>
+    <a href="{{ path('wild_program', {'slug' : 'walking-dead'}) }}" class="btn btn-secondary mt-3">
+        Back to {{ season.program.title }}
+    </a>
 {% endblock %}

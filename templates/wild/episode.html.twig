@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+{% endblock %}
+
+{% block body %}
+    <h2>{{ episode.season.program.title }}</h2>
+    <div class="card">
+        <div class="card-header">
+            S{{ episode.season.number }} - E{{ episode.number }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ episode.title }}</h5>
+            <p class="card-text">{{ episode.synopsis }}</p>
+        </div>
+    </div>
+    <a href="{{ path('wild_season', {'id': episode.season.id}) }}" class="btn btn-secondary mt-3">
+        Back to {{ episode.season.program.title }} season {{ episode.season.number }}
+    </a>
+{% endblock %}
