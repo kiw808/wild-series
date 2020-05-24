@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -46,6 +47,43 @@ class Category
     {
         $this->name = $name;
 
+        return $this;
+    }
+
+    /**
+     * @return Collection|Program[]
+     */
+    public function getPrograms() :\Doctrine\Common\Collections\Collection
+    {
+        return $this->programs;
+    }
+
+    /**
+     * @param Program $program
+     * @return Category
+     */
+    public function addProgram(Program $program) :self
+    {
+        if (!$this->programs->contains($program)) {
+            $this->programs[] = $program;
+            $program->setCategory($this);
+        }
+        return $this;
+    }
+
+    /**
+     * @param Program $program
+     * @return Category
+     */
+    public function removeProgram(Program $program) :self
+    {
+        if ($this->programs->contains($program)) {
+            $this->programs->removeElement($program);
+
+            if ($program->getCategory() === $this) {
+                $program->setCategory(null);
+            }
+        }
         return $this;
     }
 }
