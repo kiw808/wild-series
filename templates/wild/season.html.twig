@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ season.program.title }} - Season {{ season.number }}
+    {{ program.title }} - Season {{ season.number }}
 {% endblock %}
 
 {% block body %}
-    <h2>Season {{ season.number }} of {{ season.program.title }}</h2>
+    <h2>Season {{ season.number }} of {{ program.title }}</h2>
     <div>
         <ul class="list-group list-group-flush">
             {% for episode in episodes %}
