@@ -6,15 +6,25 @@
 
 {% block body %}
     <h1>All shows in the table programs</h1>
-    {% for program in programs %}
-        <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Category : {{ program.category.name }}</h2>
-            <p>{{ program.summary }}</p>
-        </div>
-    {% else %}
-        Shows not found
-    {% endfor %}
-    <a href="{{ path('app_index') }}">
+    <div class="row">
+        {% for program in programs %}
+            <div class="col-4">
+                <div class="card mb-3 mh-75">
+                    <div class="card-header">
+                        <strong><a href="#">{{ loop.index }} / {{ program.title }}</a></strong>
+                        <p>{{ program.category.name }}</p>
+                    </div>
+                    <img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }} poster">
+                    <div class="card-body">
+                        <p>{{ program.summary }}</p>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            Shows not found
+        {% endfor %}
+    </div>
+    <a href="{{ path('app_index') }}" class="btn btn-secondary">
         Back to home
     </a>
 {% endblock %}
