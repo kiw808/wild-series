@@ -179,17 +179,17 @@ class WildController extends AbstractController
      *     defaults={"id"= null},
      *     name="episode"
      * )
-     * @param int $id
+     * @param Episode $episode
      * @return Response
      */
-    public function showByEpisode(int $id) :Response
+    public function showByEpisode(Episode $episode) :Response
     {
-        $episode = $this->getDoctrine()
-            ->getRepository(Episode::class)
-            ->findOneBy(['id' => $id]);
-
+        $season = $episode->getSeason();
+        $program = $season->getProgram();
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
+            'season' => $season,
+            'program' => $program,
         ]);
     }
 }
