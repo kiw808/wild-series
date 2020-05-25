@@ -186,10 +186,19 @@ class WildController extends AbstractController
     {
         $season = $episode->getSeason();
         $program = $season->getProgram();
+        $slug = strtolower(
+            str_replace(
+                ' ',
+                '-',
+                $program->getTitle()
+            )
+        );
+
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
             'season' => $season,
             'program' => $program,
+            'slug' => $slug,
         ]);
     }
 }

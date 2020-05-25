@@ -7,6 +7,7 @@
 {% block body %}
     <h2>Season {{ season.number }} of {{ program.title }}</h2>
     <div>
+        <p>{{ season.description }}</p>
         <ul class="list-group list-group-flush">
             {% for episode in episodes %}
                 <a href="/wild/episode/{{ episode.id }}"><li class="list-group-item">Episode {{ episode.number }} : {{ episode.title }}</li></a>

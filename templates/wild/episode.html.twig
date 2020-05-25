@@ -14,7 +14,10 @@
             <p class="card-text">{{ episode.synopsis }}</p>
         </div>
     </div>
+    <a href="{{ path('wild_program', {'slug' : slug}) }}" class="btn btn-secondary mt-3">
+        Back to {{ program.title }}
+    </a>
     <a href="{{ path('wild_season', {'id': season.id}) }}" class="btn btn-secondary mt-3">
-        Back to {{ program.title }} season {{ season.number }}
+        Back to season {{ season.number }}
     </a>
 {% endblock %}
