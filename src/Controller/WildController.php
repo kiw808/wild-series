@@ -228,4 +228,31 @@ class WildController extends AbstractController
             'slug' => $slug,
         ]);
     }
+
+    /**
+     * @Route("/addCategory", name="addCategory")
+     * @param Request $request
+     * @return Response
+     */
+    public function addCategory(Request $request) :Response
+    {
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category = $form->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($category);
+            $entityManager->flush();
+        }
+
+        dump($category);
+
+        return $this->render('wild/addCategory.html.twig', [
+            'form' => $form->createView(),
+            'category' => $category
+        ]);
+    }
 }

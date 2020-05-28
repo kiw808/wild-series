@@ -6,10 +6,12 @@
 
 {% block body %}
     <h1>All shows in the table programs</h1>
-    {{ form_start(form) }}
+    <div class="d-flex justify-content-end">
+    {{ form_start(form, {'attr': {'class': 'form-inline mb-3'} }) }}
         {{ form_row(form.searchField) }}
-        <button type="submit" name="btn-search" class="btn btn-secondary mb-3">Search</button>
+        <button type="submit" name="btn-search" class="btn btn-secondary ml-1">Search</button>
     {{ form_end(form) }}
+    </div>
     {% if message|length > 0 %}
         <div class="alert alert-danger mt-3" role="alert">
             No program named <strong>{{ message }}</strong> found

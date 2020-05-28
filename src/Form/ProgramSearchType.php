@@ -12,7 +12,9 @@ class ProgramSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('searchField', SearchType::class)
+            ->add('searchField', SearchType::class, [
+                'label' => false,
+            ])
         ;
     }
 

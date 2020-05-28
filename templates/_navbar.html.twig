@@ -11,11 +11,14 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Catrgories
+                    Categories
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ path('wild_category', {'categoryName': 'Horror'}) }}">Horror</a>
-                    <a class="dropdown-item" href="{{ path('wild_category', {'categoryName': 'Adventure'}) }}">Adventure</a>
+                    {% for category in globalCategory.category %}
+                        <a href="{{ path('wild_category', {'categoryName' : category.name}) }}" class="dropdown-item">{{ category.name }}</a>
+                    {% endfor %}
+                    <div class="dropdown-divider"></div>
+                    <a href="{{ path('wild_addCategory') }}" class="dropdown-item">Add Category</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
