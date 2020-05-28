@@ -248,8 +248,6 @@ class WildController extends AbstractController
             $entityManager->flush();
         }
 
-        dump($category);
-
         return $this->render('wild/addCategory.html.twig', [
             'form' => $form->createView(),
             'category' => $category
