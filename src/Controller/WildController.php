@@ -1,15 +1,16 @@
 <?php
 
-
 namespace App\Controller;
-
 
 use App\Entity\Category;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\CategoryType;
+use App\Form\ProgramSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,10 +22,33 @@ class WildController extends AbstractController
 {
     /**
      * @Route("/", name="index")
+     * @param Request $request
      * @return Response
      */
-    public function index() :Response
+    public function index(Request $request) :Response
     {
+        // Search form
+        $form = $this->createForm(ProgramSearchType::class, null, ['method' => Request::METHOD_GET]);
+        $form->handleRequest($request);
+
+        $message = "";
+
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+
+            $program = $this->getDoctrine()
+                ->getRepository(Program::class)
+                ->findOneBy(['title' => $data]);
+
+            if (!$program) {
+                $message  = $data['searchField'];
+            } else {
+                return $this->render('wild/show.html.twig', [
+                    'program' => $program,
+                ]);
+            }
+        }
+
         $programs = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findAll();
@@ -36,8 +60,11 @@ class WildController extends AbstractController
         }
 
         return $this->render('wild/index.html.twig', [
+            'message' => $message,
             'programs' => $programs,
+            'form' => $form->createView(),
         ]);
+
     }
 
     /**

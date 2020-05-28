@@ -6,6 +6,15 @@
 
 {% block body %}
     <h1>All shows in the table programs</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.searchField) }}
+        <button type="submit" name="btn-search" class="btn btn-secondary mb-3">Search</button>
+    {{ form_end(form) }}
+    {% if message|length > 0 %}
+        <div class="alert alert-danger mt-3" role="alert">
+            No program named <strong>{{ message }}</strong> found
+        </div>
+    {% endif %}
     <div class="row">
         {% for program in programs %}
             <div class="col-4 d-flex mb-3">
