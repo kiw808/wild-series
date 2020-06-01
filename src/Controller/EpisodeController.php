@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Episode;
+use App\Entity\Program;
 use App\Form\EpisodeType;
 use App\Repository\EpisodeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +35,10 @@ class EpisodeController extends AbstractController
         $form = $this->createForm(EpisodeType::class, $episode);
         $form->handleRequest($request);
 
+        $programs = $this->getDoctrine()
+            ->getRepository(Program::class)
+            ->findAll();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($episode);
@@ -44,6 +49,7 @@ class EpisodeController extends AbstractController
 
         return $this->render('episode/new.html.twig', [
             'episode' => $episode,
+            'programs' => $programs,
             'form' => $form->createView(),
         ]);
     }
