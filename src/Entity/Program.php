@@ -25,14 +25,13 @@ class Program
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Length(max="255")
-     * @Assert\Title
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
-     * @Assert\Regex("/(plus\ belle\ la\ vie)/g",
+     * @Assert\Regex("/(plus\ belle\ la\ vie)/",
      *     match=false,
      *     message="On parle de vraies séries ici"
      * )
