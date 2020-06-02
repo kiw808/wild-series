@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Actor;
 use App\Entity\Category;
 use App\Entity\Episode;
 use App\Entity\Program;
@@ -251,6 +252,18 @@ class WildController extends AbstractController
         return $this->render('wild/addCategory.html.twig', [
             'form' => $form->createView(),
             'category' => $category
+        ]);
+    }
+
+    /**
+     * @Route("/actor/{id}", name="actor")
+     * @param Actor $actor
+     * @return Response
+     */
+    public function showByActor(Actor $actor) :Response
+    {
+        return $this->render('wild/actor.html.twig', [
+            'actor' => $actor,
         ]);
     }
 }
