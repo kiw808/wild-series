@@ -10,6 +10,16 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class CategoryFixtures extends Fixture
 {
+    const CATEGORIES = [
+        'Action',
+        'Adventure',
+        'Animation',
+        'Fantasy',
+        'Horror',
+        'Science-fiction',
+        'Romance',
+        'Comedy',
+    ];
 
     /**
      * @inheritDoc
@@ -23,14 +33,22 @@ class CategoryFixtures extends Fixture
         $manager->flush();
         */
 
-        // Multiple fixtures
+        /* Multiple fixtures
         for ($i = 1; $i <= 50; $i++) {
             $category = new Category();
             $category->setName('Category name ' . $i);
             $manager->persist($category);
         }
         $manager->flush();
+        */
 
+        // Fixtures with constant
+        foreach (self::CATEGORIES as $key => $categoryName) {
+            $category = new Category();
+            $category->setName($categoryName);
 
+            $manager->persist($category);
+        }
+        $manager->flush();
     }
 }
