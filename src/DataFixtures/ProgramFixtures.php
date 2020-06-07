@@ -7,8 +7,9 @@ namespace App\DataFixtures;
 use App\Entity\Program;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class ProgramFixtures extends Fixture
+class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
     const PROGRAMS = [
         'Walking Dead' => [
@@ -36,6 +37,11 @@ class ProgramFixtures extends Fixture
             'category' => 'category_4',
         ],
     ];
+
+    public function getDependencies()
+    {
+        return [CategoryFixtures::class];
+    }
 
     /**
      * @inheritDoc
