@@ -153,9 +153,7 @@ class WildController extends AbstractController
             );
         }
 
-        $seasons = $this->getDoctrine()
-            ->getRepository(Season::class)
-            ->findAll();
+        $seasons = $program->getSeasons();
 
         if (!$seasons) {
             throw $this->createNotFoundException(
