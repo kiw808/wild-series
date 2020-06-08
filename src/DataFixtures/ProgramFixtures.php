@@ -57,8 +57,13 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($program);
 
             $this->addReference('program_' . $i, $program);
+            // add 'walking' only to Walking Dead and Fear The Walking Dead
+            if (strpos($title, 'Walking') !== false) {
+                $this->addReference('walking_' . $i, $program);
+            }
             $i++;
             $program->setCategory($this->getReference($data['category']));
+
         }
         $manager->flush();
     }

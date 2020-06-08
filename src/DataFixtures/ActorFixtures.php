@@ -31,7 +31,13 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
         foreach (self::ACTORS as $key => $name) {
             $actor = new Actor();
             $actor->setName($name);
-            $actor->addProgram($this->getReference('program_0'));
+            if ($name == 'Andrew Lincoln') {
+                $actor->addProgram($this->getReference('walking_0'));
+                $actor->addProgram($this->getReference('walking_5'));
+            }
+            else {
+                $actor->addProgram($this->getReference('program_0'));
+            }
 
             $manager->persist($actor);
 
