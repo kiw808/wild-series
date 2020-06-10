@@ -65,6 +65,8 @@ class EpisodeController extends AbstractController
 
     /**
      * @Route("/{id}", name="episode_show", methods={"GET"})
+     * @param Episode $episode
+     * @return Response
      */
     public function show(Episode $episode): Response
     {
@@ -103,6 +105,9 @@ class EpisodeController extends AbstractController
 
     /**
      * @Route("/{id}", name="episode_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Episode $episode
+     * @return Response
      */
     public function delete(Request $request, Episode $episode): Response
     {
