@@ -53,9 +53,10 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $i = 0;
         foreach (self::PROGRAMS as $title => $data) {
             $program = new Program();
-            $slugify = new Slugify();
             $program->setTitle($title);
             $program->setSummary($data['summary']);
+
+            $slugify = new Slugify();
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
 

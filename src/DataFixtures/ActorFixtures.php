@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Actor;
+use App\Service\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -41,6 +42,10 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
                 $actor->addProgram($this->getReference('program_0'));
             }
 
+            $slugify = new Slugify();
+            $slug = $slugify->generate($actor->getName());
+            $actor->setSlug($slug);
+
             $manager->persist($actor);
 
             $this->addReference('actor_' . $key, $actor);
@@ -67,6 +72,10 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
             elseif ($i > 40 && $i <= 50) {
                 $actor->addProgram($this->getReference('program_5'));
             }
+
+            $slugify = new Slugify();
+            $slug = $slugify->generate($actor->getName());
+            $actor->setSlug($slug);
 
             $manager->persist($actor);
         }
