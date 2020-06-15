@@ -1,0 +1,12 @@
+{% extends 'email/_mail_base.html.twig' %}
+
+{% block title %}Hello Wilder{% endblock %}
+
+{% block body %}
+    <div>
+        <h3>Hello Wilder !</h3>
+        <p>A new program has been published in <a href="#">Wild Series</a> :</p>
+        <p><a href="#">{{ program.title }}</a></p>
+        <p>Hoping to see you soon !</p>
+    </div>
+{% endblock %}

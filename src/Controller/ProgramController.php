@@ -9,6 +9,7 @@ use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,6 +21,8 @@ class ProgramController extends AbstractController
 {
     /**
      * @Route("/", name="program_index", methods={"GET"})
+     * @param ProgramRepository $programRepository
+     * @return Response
      */
     public function index(ProgramRepository $programRepository): Response
     {
@@ -32,7 +35,9 @@ class ProgramController extends AbstractController
      * @Route("/new", name="program_new", methods={"GET","POST"})
      * @param Request $request
      * @param Slugify $slugify
+     * @param MailerInterface $mailer
      * @return Response
+     * @throws TransportExceptionInterface
      */
     public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
     {
@@ -53,10 +58,12 @@ class ProgramController extends AbstractController
 
             // send email
             $email = (new Email())
-                ->from('pm.test.wcs@gmail.com')
-                ->to('user@mail.com')
+                ->from($this->getParameter('mailer_from'))
+                ->to($this->getParameter('mailer_from'))
                 ->subject('A new program has been published !')
-                ->html('<p>A new program has been published on Wild Series !</p>');
+                ->html($this->renderView('email/new_program.html.twig', [
+                    'program' => $program
+                ]));
 
             $mailer->send($email);
 
