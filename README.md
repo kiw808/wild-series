@@ -18,5 +18,10 @@ A Symfony expedition
             17 - Services
         </a>
     </li>
+    <li>
+        <a href="https://drive.google.com/file/d/1V6_lLmijPJkLmgM2Azs18gc25kE8tKHY/view?usp=sharing">
+            18 - Mailer
+        </a>
+    </li>
 </ul>
 
