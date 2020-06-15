@@ -9,6 +9,8 @@ use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -32,7 +34,7 @@ class ProgramController extends AbstractController
      * @param Slugify $slugify
      * @return Response
      */
-    public function new(Request $request, Slugify $slugify): Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -45,9 +47,20 @@ class ProgramController extends AbstractController
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
 
+            // persist and flush
             $entityManager->persist($program);
             $entityManager->flush();
 
+            // send email
+            $email = (new Email())
+                ->from('pm.test.wcs@gmail.com')
+                ->to('user@mail.com')
+                ->subject('A new program has been published !')
+                ->html('<p>A new program has been published on Wild Series !</p>');
+
+            $mailer->send($email);
+
+            // redirection
             return $this->redirectToRoute('program_index');
         }
 
