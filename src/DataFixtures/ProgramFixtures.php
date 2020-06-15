@@ -10,6 +10,7 @@ use App\Service\Slugify;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Faker;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -55,6 +56,9 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program = new Program();
             $program->setTitle($title);
             $program->setSummary($data['summary']);
+
+            $faker = Faker\Factory::create('en_UK');
+            $program->setPoster('https://via.placeholder.com/660x960');
 
             $slugify = new Slugify();
             $slug = $slugify->generate($program->getTitle());

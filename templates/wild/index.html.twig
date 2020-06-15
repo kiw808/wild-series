@@ -22,7 +22,7 @@
             <div class="col-sm-6 col-md-4 d-flex mb-3">
                 <div class="card">
                     <div class="card-header text-light bg-dark">
-                        <strong><a href="{{ path('wild_show', {'id' : program.id}) }}">{{ loop.index }} / {{ program.title }}</a></strong>
+                        <strong><a href="{{ path('wild_show', {'slug' : program.slug}) }}">{{ loop.index }} / {{ program.title }}</a></strong>
                         <p>{{ program.category.name }}</p>
                     </div>
                     <img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }} poster">
@@ -36,6 +36,6 @@
         {% endfor %}
     </div>
     <a href="{{ path('app_index') }}" class="btn btn-secondary">
-        Back to home
+        Home
     </a>
 {% endblock %}
