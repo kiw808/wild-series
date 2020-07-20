@@ -1,45 +1,55 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="/"><i class="fas fa-fire"></i> Wild Series</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="container">
+        <a class="navbar-brand" href="/"><i class="fas fa-fire"></i> Wild Series</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/wild">Go wild</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Categories
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    {% for category in globalCategory.category %}
-                        <a href="{{ path('wild_category', {'categoryName' : category.name}) }}" class="dropdown-item">{{ category.name }}</a>
-                    {% endfor %}
-                    <div class="dropdown-divider"></div>
-                    <a href="{{ path('category_index') }}" class="dropdown-item">Manage</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Acteurs
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    {% for actor in globalActors.actors %}
-                        <a href="{{ path('actor_show', {'slug' : actor.slug}) }}" class="dropdown-item">{{ actor.name }}</a>
-                    {% endfor %}
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Favoris</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Connexion</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Profil</a>
-            </li>
-        </ul>
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/wild">Go wild</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for category in globalCategory.category %}
+                            <a href="{{ path('wild_category', {'categoryName' : category.name}) }}" class="dropdown-item">{{ category.name }}</a>
+                        {% endfor %}
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ path('category_index') }}" class="dropdown-item">Manage</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Acteurs
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for actor in globalActors.actors %}
+                            <a href="{{ path('actor_show', {'slug' : actor.slug}) }}" class="dropdown-item">{{ actor.name }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Favoris</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto>
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{{ app.user.email }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </nav>
