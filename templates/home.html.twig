@@ -1,4 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<h1>{{ welcome }}</h1>
+    <h1>{{ welcome }}</h1>
+    <a href="{{ path('wild_index') }}">
+        Testing index() method from WildController to view all programs.
+    </a>
+    <br>
+    <a href="{{ path('wild_category', {'categoryName' : 'Horror'}) }}">
+        Testing showByCategory() method from WildController with a real program category.
+    </a>
+    <br>
+    <a href="{{ path('wild_program', {'slug' : 'walking-dead'}) }}">
+        Testing showByProgram() method from WildController with a real program slug.
+    </a>
+    <br>
+    <a href="{{ path('program_index') }}">Program CRUD</a>
+    <br>
+    <a href="{{ path('season_index') }}">Season CRUD</a>
+    <br>
+    <a href="{{ path('episode_index') }}">Episode CRUD</a>
 {% endblock %}

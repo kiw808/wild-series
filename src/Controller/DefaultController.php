@@ -14,10 +14,11 @@ class DefaultController extends AbstractController
      */
     public function index() :Response
     {
-        $welcome = 'Bienvenue !';
+        $welcome = 'Welcome !';
 
         return $this->render('home.html.twig', [
             'welcome' => $welcome,
+
         ]);
     }
 }

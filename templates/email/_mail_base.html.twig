@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        body {
+            background-color: #ECE9E3;
+            color: #1e1e1e;
+            font-family: 'Open Sans', sans-serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Assistant', sans-serif;
+        }
+        .mail-header {
+            background-color: #e85555;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        {% include 'email/_header.html.twig' %}
+    </header>
+    {% block body %}{% endblock %}
+</body>
+</html>
