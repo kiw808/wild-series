@@ -27,7 +27,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% for actor in globalActors.actors %}
-                        <a href="{{ path('wild_actor', {'id' : actor.id}) }}" class="dropdown-item">{{ actor.name }}</a>
+                        <a href="{{ path('actor_show', {'slug' : actor.slug}) }}" class="dropdown-item">{{ actor.name }}</a>
                     {% endfor %}
                 </div>
             </li>
