@@ -20,7 +20,7 @@
     <a href="{{ path('wild_season', {'id': season.id}) }}" class="btn btn-secondary mt-3">
         Back to season {{ season.number }}
     </a>
-    <section class="offset-2 col-8 mt-3" id="comments">
+    <section class="offset-2 col-8 mt-5" id="comments">
         <div class="mb-3">
             {% if app.user %}
                 <div class="card">
@@ -37,7 +37,7 @@
                 <div class="card mb-3">
                     <div class="card-header d-flex justify-content-between">
                         <p class="text-black-50">{{ comment.author.email }}</p>
-                        <p class="text-primary"><em>Rating : {{ comment.rate }}</em></p>
+                        <p class="text-black-50">Rating : <span class="text-primary">{{ comment.rate }}</span></p>
                     </div>
                     <div class="card-body">
                         <p>{{ comment.comment }}</p>
