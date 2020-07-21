@@ -4,15 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Actor;
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\CategoryType;
+use App\Form\CommentType;
 use App\Form\ProgramSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class WildController
@@ -21,6 +24,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class WildController extends AbstractController
 {
+    /**
+     * @var Security
+     */
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * @Route("/", name="index")
      * @param Request $request
@@ -201,9 +214,10 @@ class WildController extends AbstractController
      *     name="episode"
      * )
      * @param Episode $episode
+     * @param Request $request
      * @return Response
      */
-    public function showByEpisode(Episode $episode) :Response
+    public function showByEpisode(Episode $episode, Request $request) :Response
     {
         $season = $episode->getSeason();
         $program = $season->getProgram();
@@ -215,8 +229,29 @@ class WildController extends AbstractController
             )
         );
 
+        $form = $this->createForm(CommentType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->security->getUser();
+            $comment = new Comment();
+            $comment = $form->getData();
+            $comment->setAuthor($user);
+            $comment->setEpisode($episode);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->redirectToRoute('wild_episode', [
+                'slug' => $program->getSlug(),
+                'id' => $episode->getId(),
+            ]);
+        }
+
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
+            'form' => $form->createView(),
             'season' => $season,
             'program' => $program,
             'slug' => $slug,
