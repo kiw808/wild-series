@@ -20,13 +20,30 @@
     <a href="{{ path('wild_season', {'id': season.id}) }}" class="btn btn-secondary mt-3">
         Back to season {{ season.number }}
     </a>
-    {% if app.user %}
-        <div class="card mt-3">
-            <div class="card-body">
-                {% include 'wild/_commentForm.html.twig' %}
-            </div>
+    <section class="offset-2 col-8 mt-3" id="comments">
+        <div class="mb-3">
+            {% if app.user %}
+                <div class="card">
+                    <div class="card-body">
+                        {% include 'wild/_commentForm.html.twig' %}
+                    </div>
+                </div>
+            {% else %}
+                <a class="btn btn-primary" href="{{ path('app_login') }}">Log in to leave a comment</a>
+            {% endif %}
         </div>
-    {% else %}
-        <a class="btn btn-primary mt-3" href="{{ path('app_login') }}">Log in to leave a comment</a>
-    {% endif %}
+        <div class="mb-3">
+            {% for comment in episode.comments | reverse %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p><em>Rating : {{ comment.rate }}</em></p>
+                        <p>{{ comment.comment }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <p class="text-right">{{ comment.author.email }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}
