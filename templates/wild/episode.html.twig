@@ -24,7 +24,7 @@
     {# Comment #}
     {% if app.user %}
         {# Modal form trigger #}
-        <button type="button" class="btn btn-primary mt-3 float-right" data-toggle="modal" data-target="#formModal">Leave a comment</button>
+        <button type="button" class="btn btn-primary mt-3 float-right" data-toggle="modal" data-target="#formModal"><i class="far fa-comment-dots"></i> Leave a comment</button>
 
         {# Modal form #}
         <div class="modal fade" id="formModal" tabindex="-1" role="form" aria-labelledby="formModal" aria-hidden="true">
@@ -40,24 +40,28 @@
             </div>
         </div>
     {% else %}
-        <a class="btn btn-primary mt-3 float-right" href="{{ path('app_login') }}">Log in to leave a comment</a>
+        <a class="btn btn-primary mt-3 float-right" href="{{ path('app_login') }}"><i class="far fa-comment-dots"></i> Log in to leave a comment</a>
     {% endif %}
 
     {# CommentS #}
     <section class="offset-2 col-8 mt-5" id="comments">
         <h5 class="text-center text-black-50 mb-3">Comments section</h5>
-        <div class="mb-3">
-            {% for comment in episode.comments | reverse %}
-                <div class="card mb-3">
-                    <div class="card-header d-flex justify-content-between">
-                        <p class="text-black-50">{{ comment.author.email }}</p>
-                        <p class="text-black-50">Rating : <span class="text-primary">{{ comment.rate }}</span></p>
+        {% if episode.comments.count == 0 %}
+            <p class="text-center text-secondary">Be the first to comment ! </br><em>(Hit the "Leave a comment" button)</em></p>
+        {% else %}
+            <div class="mb-3">
+                {% for comment in episode.comments | reverse %}
+                    <div class="card mb-3">
+                        <div class="card-header d-flex justify-content-between">
+                            <p class="text-black-50">{{ comment.author.email }}</p>
+                            <p class="text-black-50">Rating : <span class="text-primary">{{ comment.rate }}</span></p>
+                        </div>
+                        <div class="card-body d-flex">
+                            <p>{{ comment.comment }}</p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <p>{{ comment.comment }}</p>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </section>
 {% endblock %}

@@ -266,6 +266,27 @@ class WildController extends AbstractController
     }
 
     /**
+     * @Route("/delete_comment", name="delete_comment")
+     * @param Request $request
+     * @param Comment $comment
+     * @return Response
+     */
+    public function deleteComment(Request $request, Comment $comment): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+
+        // Redirection
+        return $this->redirectToRoute('wild_episode', [
+            'slug' => $comment->getEpisode()->getSeason()->getProgram()->getSlug(),
+            'id' => $comment->getEpisode()->getId(),
+        ]);
+    }
+
+    /**
      * @Route("/addCategory", name="addCategory")
      * @param Request $request
      * @return Response
