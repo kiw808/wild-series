@@ -20,18 +20,31 @@
     <a href="{{ path('wild_season', {'id': season.id}) }}" class="btn btn-secondary mt-3">
         Back to season {{ season.number }}
     </a>
-    <section class="offset-2 col-8 mt-5" id="comments">
-        <div class="mb-3">
-            {% if app.user %}
-                <div class="card">
-                    <div class="card-body">
+
+    {# Comment #}
+    {% if app.user %}
+        {# Modal form trigger #}
+        <button type="button" class="btn btn-primary mt-3 float-right" data-toggle="modal" data-target="#formModal">Leave a comment</button>
+
+        {# Modal form #}
+        <div class="modal fade" id="formModal" tabindex="-1" role="form" aria-labelledby="formModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         {% include 'wild/_commentForm.html.twig' %}
                     </div>
                 </div>
-            {% else %}
-                <a class="btn btn-primary" href="{{ path('app_login') }}">Log in to leave a comment</a>
-            {% endif %}
+            </div>
         </div>
+    {% else %}
+        <a class="btn btn-primary mt-3 float-right" href="{{ path('app_login') }}">Log in to leave a comment</a>
+    {% endif %}
+
+    {# CommentS #}
+    <section class="offset-2 col-8 mt-5" id="comments">
         <div class="mb-3">
             {% for comment in episode.comments | reverse %}
                 <div class="card mb-3">
