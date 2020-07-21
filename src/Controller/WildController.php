@@ -234,6 +234,7 @@ class WildController extends AbstractController
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->handleRequest($request);
 
+        // Form processing
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             // Fetch logged user
             $user = $this->security->getUser();

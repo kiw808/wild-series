@@ -35,12 +35,12 @@
         <div class="mb-3">
             {% for comment in episode.comments | reverse %}
                 <div class="card mb-3">
-                    <div class="card-body">
-                        <p><em>Rating : {{ comment.rate }}</em></p>
-                        <p>{{ comment.comment }}</p>
+                    <div class="card-header d-flex justify-content-between">
+                        <p class="text-black-50">{{ comment.author.email }}</p>
+                        <p class="text-primary"><em>Rating : {{ comment.rate }}</em></p>
                     </div>
-                    <div class="card-footer">
-                        <p class="text-right">{{ comment.author.email }}</p>
+                    <div class="card-body">
+                        <p>{{ comment.comment }}</p>
                     </div>
                 </div>
             {% endfor %}
