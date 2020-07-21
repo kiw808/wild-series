@@ -229,21 +229,27 @@ class WildController extends AbstractController
             )
         );
 
-        $form = $this->createForm(CommentType::class);
+        // COMMENT FORM //
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            // Fetch logged user
             $user = $this->security->getUser();
-            $comment = new Comment();
-            $comment = $form->getData();
+
+            // Populate entity
+            $comment = $commentForm->getData();
             $comment->setAuthor($user);
             $comment->setEpisode($episode);
 
+            // Insert in database
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            $this->redirectToRoute('wild_episode', [
+            // Redirection
+            return $this->redirectToRoute('wild_episode', [
                 'slug' => $program->getSlug(),
                 'id' => $episode->getId(),
             ]);
@@ -251,7 +257,7 @@ class WildController extends AbstractController
 
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
-            'form' => $form->createView(),
+            'commentForm' => $commentForm->createView(),
             'season' => $season,
             'program' => $program,
             'slug' => $slug,
