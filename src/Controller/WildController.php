@@ -4,15 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Actor;
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\CategoryType;
+use App\Form\CommentType;
 use App\Form\ProgramSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class WildController
@@ -21,6 +24,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class WildController extends AbstractController
 {
+    /**
+     * @var Security
+     */
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * @Route("/", name="index")
      * @param Request $request
@@ -201,9 +214,10 @@ class WildController extends AbstractController
      *     name="episode"
      * )
      * @param Episode $episode
+     * @param Request $request
      * @return Response
      */
-    public function showByEpisode(Episode $episode) :Response
+    public function showByEpisode(Episode $episode, Request $request) :Response
     {
         $season = $episode->getSeason();
         $program = $season->getProgram();
@@ -215,11 +229,60 @@ class WildController extends AbstractController
             )
         );
 
+        // COMMENT FORM //
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
+
+        // Form processing
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            // Fetch logged user
+            $user = $this->security->getUser();
+
+            // Populate entity
+            $comment = $commentForm->getData();
+            $comment->setAuthor($user);
+            $comment->setEpisode($episode);
+
+            // Insert in database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            // Redirection
+            return $this->redirectToRoute('wild_episode', [
+                'slug' => $program->getSlug(),
+                'id' => $episode->getId(),
+            ]);
+        }
+
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
+            'commentForm' => $commentForm->createView(),
             'season' => $season,
             'program' => $program,
             'slug' => $slug,
+        ]);
+    }
+
+    /**
+     * @Route("/delete_comment", name="delete_comment")
+     * @param Request $request
+     * @param Comment $comment
+     * @return Response
+     */
+    public function deleteComment(Request $request, Comment $comment): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+
+        // Redirection
+        return $this->redirectToRoute('wild_episode', [
+            'slug' => $comment->getEpisode()->getSeason()->getProgram()->getSlug(),
+            'id' => $comment->getEpisode()->getId(),
         ]);
     }
 

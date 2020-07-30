@@ -20,4 +20,48 @@
     <a href="{{ path('wild_season', {'id': season.id}) }}" class="btn btn-secondary mt-3">
         Back to season {{ season.number }}
     </a>
+
+    {# Comment #}
+    {% if app.user %}
+        {# Modal form trigger #}
+        <button type="button" class="btn btn-primary mt-3 float-right" data-toggle="modal" data-target="#formModal"><i class="far fa-comment-dots"></i> Leave a comment</button>
+
+        {# Modal form #}
+        <div class="modal fade" id="formModal" tabindex="-1" role="form" aria-labelledby="formModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {% include 'wild/_commentForm.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <a class="btn btn-primary mt-3 float-right" href="{{ path('app_login') }}"><i class="far fa-comment-dots"></i> Log in to leave a comment</a>
+    {% endif %}
+
+    {# CommentS #}
+    <section class="offset-2 col-8 mt-5" id="comments">
+        <h5 class="text-center text-black-50 mb-3">Comments section</h5>
+        {% if episode.comments.count == 0 %}
+            <p class="text-center text-secondary">Be the first to comment ! </br><em>(Hit the "Leave a comment" button)</em></p>
+        {% else %}
+            <div class="mb-3">
+                {% for comment in episode.comments | reverse %}
+                    <div class="card mb-3">
+                        <div class="card-header d-flex justify-content-between">
+                            <p class="text-black-50">{{ comment.author.email }}</p>
+                            <p class="text-black-50">Rating : <span class="text-primary">{{ comment.rate }}</span></p>
+                        </div>
+                        <div class="card-body d-flex">
+                            <p>{{ comment.comment }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </section>
 {% endblock %}
