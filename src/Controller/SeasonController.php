@@ -80,6 +80,9 @@ class SeasonController extends AbstractController
 
     /**
      * @Route("/{id}", name="season_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Season $season
+     * @return Response
      */
     public function delete(Request $request, Season $season): Response
     {
