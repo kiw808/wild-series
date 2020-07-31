@@ -58,9 +58,9 @@
                         <div class="card-body d-flex">
                             <p>{{ comment.comment }}</p>
                         </div>
-                        {% if app.user.email == comment.author.email %}
+                        {% if app.user and app.user.email == comment.author.email %}
                             <div class="card-footer">
-                                    {{ include('wild/_deleteComment.html.twig') }}
+                                {{ include('wild/_deleteComment.html.twig') }}
                             </div>
                         {% endif %}
                     </div>
