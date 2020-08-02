@@ -11,7 +11,8 @@
             <th>Id</th>
             <th>Title</th>
             <th>Summary</th>
-            <th>Poster</th>
+            <th>Category</th>
+            <th>Actors</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -21,7 +22,16 @@
                 <td>{{ program.id }}</td>
                 <td>{{ program.title }}</td>
                 <td>{{ program.summary }}</td>
-                <td>{{ program.poster }}</td>
+                <td>{{ program.category.name }}</td>
+                <td>
+                    {% if program.actors %}
+                        {% for actor in program.actors %}
+                            {{ actor.name ~ ', '}}
+                        {% endfor %}
+                    {% else %}
+                        <em>No actors found</em>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ path('program_show', {'slug': program.slug}) }}">show</a>
                     <a href="{{ path('program_edit', {'slug': program.slug}) }}">edit</a>
